@@ -29,11 +29,7 @@ To run this code, you'll need:
 
 3. **Launch the ROS2 Nodes**
 
-    Execute the launch file (this will be used for further development, however it is currently not in use and you're better off using run below):
-
-    ```bash
-    ros2 launch final_project_energy practical_test_launch_file.launch.py
-    ```
+    A runnable launch file exists for future development, however, the launch file doesn't ask for inputs and users only run one node which can be ran directly using run:
 
     ```bash
     ros2 run final_project_energy show_energy

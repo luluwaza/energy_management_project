@@ -37,10 +37,9 @@ To run this code, you'll need:
 
 4. **Incase you'd like to copy paste everything at once**
 
+    Get into the project's directory and then run:
     ```bash
-    cd ~/ros2_ws/robotics_project_final_work
     colcon build
-    cd ../install
     source install/setup.bash
     ros2 run final_project_energy show_energy
     ```

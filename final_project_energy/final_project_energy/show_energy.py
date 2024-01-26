@@ -68,6 +68,26 @@ class ShowEnergy(Node):
         )
         amount_of_turns_per_speed = int(input("Enter the amount of turns the robot should do per speed: "))
         self.was_space = self.space_on_left()
+
+        self.get_logger().info("=============")
+        self.get_logger().info("Calibrating the robot")
+        if self.was_space:
+            while self.space_on_left():
+                msg = Twist()
+                msg.linear.x = 0.05
+                self.publisher.publish(msg)
+        else:
+            while not self.space_on_left():
+                msg = Twist()
+                msg.linear.x = -0.05
+                self.publisher.publish(msg)
+        # litle moovement up front + recheck space in case of lidar inaccuracy, need testing IRL
+        self.move(0.1, 0.0, 0.1)
+        self.stop_robot()
+        self.was_space = self.space_on_left()
+        self.get_logger().info("Calibration finished")
+        self.get_logger().info("=============")
+
         self.get_logger().info("Starting test in 5 seconds")
         for i in range(5):
             print(f"{5 - i}" + "." * i, end="\r")
@@ -98,7 +118,6 @@ class ShowEnergy(Node):
             self.display_speed_tests_results()
             if i < self.iterations_amount - 1:
                 self.get_logger().info(f"Test finished for this speed in {self.elapsed_time}s")
-                # TODO wait for the user to put a hand in front of the lidar instead of waiting 10 seconds
                 for i in range(10):
                     print(f"The test will start again in {10 - i} seconds", end="\r")
 
